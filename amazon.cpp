@@ -9,6 +9,7 @@
 #include "db_parser.h"
 #include "product_parser.h"
 #include "util.h"
+#include "mydatastore.h"
 
 using namespace std;
 struct ProdNameSorter {
@@ -29,7 +30,10 @@ int main(int argc, char* argv[])
      * Declare your derived DataStore object here replacing
      *  DataStore type to your derived type
      ****************/
-    DataStore ds;
+    
+    // declaration of my derived DataStore object
+    // (aka MyDataStore)
+    MyDataStore ds;
 
 
 
@@ -99,11 +103,53 @@ int main(int argc, char* argv[])
                 }
                 done = true;
             }
-	    /* Add support for other commands here */
-
-
-
-
+                        // menu option to add item to cart
+						else if ( cmd == "ADD") {
+								// buffers for username
+                                // & search result item 
+                                // number to add
+                                string username;
+								size_t hitIndex;
+								if (ss >> username) {
+									if (ss >> hitIndex) {
+                                        // initialize new user pointer 
+                                        // by calling user function that 
+                                        // returns pointer of username string
+										User* currUser = ds.findUserPointer(username);
+										// calls MyDataStore function to add
+                                        // item to current user's cart
+                                        ds.addCart(currUser, hitIndex);
+									}
+								}
+						}
+                        // menu option to view a user's cart
+						else if ( cmd == "VIEWCART") {
+								// buffer for username 
+                                string username;
+								if (ss >> username)  {
+                                        // initialize new user pointer 
+                                        // by calling user function that 
+                                        // returns pointer of username string
+										User* currUser = ds.findUserPointer(username);
+										// calls MyDataStore function to 
+                                        // display current user's cart
+                                        ds.viewCart(currUser);
+								}
+						}
+                        // menu option to buy a user's cart
+						else if ( cmd == "BUYCART") {
+								// buffer for username 
+                                string username;
+								if (ss >> username) {
+									// initialize new user pointer 
+                                    // by calling user function that 
+                                    // returns pointer of username string
+                                    User* currUser = ds.findUserPointer(username);
+									// calls MyDataStore function to 
+                                    // buy current user's cart
+                                    ds.buyCart(currUser);
+								}
+						}
             else {
                 cout << "Unknown command" << endl;
             }

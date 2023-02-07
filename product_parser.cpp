@@ -5,6 +5,7 @@
 #include "clothing.h"
 #include "movie.h"
 #include "util.h"
+#include "product.h"
 using namespace std;
 
 
@@ -130,7 +131,12 @@ std::string ProductBookParser::categoryID()
  */
 Product* ProductBookParser::makeProduct()
 {
-
+    // dynamically allocates new memory for 
+    // a new Book (product-derived object) by 
+    // calling its constructor 
+    Product* newBook = new Book(categoryID(), prodName_, price_, qty_, isbn_, author_);
+	// returns pointer to new Book item
+    return newBook;
 
 }
 
@@ -185,9 +191,12 @@ std::string ProductClothingParser::categoryID()
  */
 Product* ProductClothingParser::makeProduct()
 {
-
-
-
+    // dynamically allocates new memory for 
+    // a new Clothing (product-derived object) by 
+    // calling its constructor 
+	Product* newClothing = new Clothing(categoryID(), prodName_, price_, qty_, size_, brand_);
+	// returns pointer to new Clothing item 
+    return newClothing;
 }
 
 
@@ -245,6 +254,11 @@ std::string ProductMovieParser::categoryID()
  */
 Product* ProductMovieParser::makeProduct()
 {
-
-
+	// dynamically allocates new memory for 
+    // a new Movie (product-derived object) by 
+    // calling its constructor 
+    Product* newMovie = new Movie(categoryID(), prodName_, price_, qty_, genre_, rating_);
+	// returns pointer to new Movie item 
+    return newMovie;
 }
+
